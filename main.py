@@ -11,15 +11,30 @@ add blur to the image if possible or fix font sizes
 
 PLACES = [
 	["Valka", "http://www.valka.lv/webcam/img.php"],
+	["Kolka", "http://84.15.209.153:8080/?action=snapshot"],
+	["Ventspils", "http://85.158.74.22/mjpg/video.mjpg"],
+	["Sigulda", "https://camstream.alteco.lv:8443/live/camera12_720p2628kbs/index.m3u8"],
+	["Liepaja", "http://arhivs.liepaja.lv/webcam2/current.jpg"],
+	["Madona", "http://www.madona.lv/lat/webcam/gj.php?id=1?v=" + str(time.time())],
+	["Kuldiga", "http://edge-telia1.tiesraides.lv/live/kuldiga.lv.12_1/chunklist.m3u8"],
+	["Saulkrasti", "http://s29.ipcamlive.com/streams/1dpjeuoznbp0goljd/stream.m3u8"],
+	["Aluksne", [
+		"https://skats.aluksne.lv:8125/muzejs.webm",
+		"https://skats.aluksne.lv:8125/cam.webm",
+	]], 
+	["Cesis", [
+		"https://camstream.alteco.lv:8443/live/camera3_720p2628kbs/index.m3u8",
+		"https://camstream.alteco.lv:8443/live/camera1_720p2628kbs/index.m3u8"
+	]],
 	["Kakis", [
 		"http://www.kakiskalns.lv/images/cam.php?id=1&v=" + str(time.time()),
 		"http://www.kakiskalns.lv/images/cam.php?id=2&v=" + str(time.time()),
 		"http://www.kakiskalns.lv/images/cam.php?id=3&v=" + str(time.time()),
 	]],
-	["Kolka", "http://84.15.209.153:8080/?action=snapshot"],
-	["Ventspils", "http://85.158.74.22/mjpg/video.mjpg"],
-	["Sigulda", [
-		"https://camstream.alteco.lv:8443/live/camera12_720p2628kbs/index.m3u8",
+	["Riga", [
+		"https://rop.lv/hls/cam1.m3u8",
+		"https://rop.lv/hls/cam2.m3u8",
+		"https://rop.lv/hls/cam3.m3u8"
 	]],
 ]
 
@@ -44,10 +59,9 @@ async def on_message(message):
 
 			for place in PLACES:
 				if type(place[1]) is list:
-					for index, item in enumerate(place[1]):
-						embed.add_field(name=place[0] + " - " + str(index), value=f"Use `{config['prefix']['cam']} {place[0].lower()} {index}` to view this camera!", inline=False)
+					embed.add_field(name=place[0], value=f"Use `{config['prefix']['cam']} {place[0].lower()} 0-{len(place[1])-1}` to view this camera!")
 				else:
-					embed.add_field(name=place[0], value=f"Use `{config['prefix']['cam']} {place[0].lower()}` to view this camera!", inline=False)
+					embed.add_field(name=place[0], value=f"Use `{config['prefix']['cam']} {place[0].lower()}` to view this camera!")
 
 			await message.channel.send(embed=embed)
 
@@ -60,7 +74,7 @@ async def on_message(message):
 		for place in PLACES:
 			if cam.lower().startswith(place[0].lower()):
 				found = True
-				
+
 				if type(place[1]) is list:
 					if len(args) >= 1:
 						num = int(args[0])

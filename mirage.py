@@ -25,9 +25,9 @@ def getFrame(url: str):
             return io_buf
 
 async def image(url: str, location: str, message: message):
-	if ".mjpg" in url:
+	if ".mjpg" in url or ".webm" in url:
 		buf = getFrame(url)
-		
+
 		if not buf:
 			await message.channel.send(embed=discord.Embed(title="Error!", description=f"Experienced networking error!", color=Color.red()))
 			return
