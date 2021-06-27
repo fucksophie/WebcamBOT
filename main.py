@@ -5,9 +5,6 @@ config = json.load(open("config.json"))
 
 from mirage import image
 
-"""
-add blur to the image if possible or fix font sizes
-"""
 
 PLACES = [
 	["Valka", "http://www.valka.lv/webcam/img.php"],
@@ -38,8 +35,8 @@ PLACES = [
 	]],
 ]
 
-
-client = discord.Client()
+activity = discord.Activity(type=discord.ActivityType.watching, name=f"webcams :) | {config['prefix']['commands']}viewcams")
+client = discord.Client(activity=activity)
 
 @client.event
 async def on_ready():

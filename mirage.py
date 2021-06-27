@@ -2,7 +2,7 @@ import discord, requests, io, cv2, m3u8
 from discord import message
 from discord.colour import Color
 
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image, ImageFont, ImageDraw, ImageFilter
 from datetime import datetime
 
 def getM3u8(url: str):
@@ -55,12 +55,20 @@ async def image(url: str, location: str, message: message):
 		image = Image.open(r.raw)
 
 	draw = ImageDraw.Draw(image)
-	
+
 	font_title = ImageFont.truetype("Alice-Regular.ttf", 48)
 	font_time = ImageFont.truetype("Alice-Regular.ttf", 24)
+	w_1, h_1 = font_title.getsize(location)
+	w_2, h_2 = font_time.getsize(datetime.now().strftime('%H:%M'))
+	
+	mask = Image.new('L', image.size, 0)
+	mask_draw = ImageDraw.Draw(mask)
+	mask_draw.rectangle([(10, image.size[1]-10), (w_1+w_2+18, image.size[1] - 55)], fill=255)
+	
+	image.paste(image.filter(ImageFilter.GaussianBlur(27)), mask=mask)
 
 	draw.text((11, image.size[1] - 60), location, 0, font_title)
-	draw.text((font_title.getsize(location)[0] + 15, image.size[1] - 38), datetime.now().strftime('%H:%M'), 0, font_time)
+	draw.text((w_1 + 15, image.size[1] - 38), datetime.now().strftime('%H:%M'), 0, font_time)
 
 	b = io.BytesIO()
 	image.save(b, "JPEG")
@@ -68,6 +76,10 @@ async def image(url: str, location: str, message: message):
 
 	original = await message.channel.send(embed=discord.Embed(title="Loading...", description="Rendering Image.", color=Color.orange()))
 
-	await message.channel.send(file=discord.File(b, 'img.jpg'))
+	file = discord.File(b, filename="image.png")
 
-	await original.edit(embed=discord.Embed(title="Yay!", description="Rendered!", color=Color.green()))
+	embed = discord.Embed(title="Yay!", description="Rendered!", color=Color.green())
+	embed.set_image(url="attachment://image.png")
+	
+	await message.channel.send(file=file, embed=embed)
+	await original.delete()
