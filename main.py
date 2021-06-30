@@ -51,18 +51,36 @@ async def on_message(message):
 	if message.content.startswith(config["prefix"]["commands"]):
 		args = message.content.split(" ")
 		command = args.pop(0)[len(config["prefix"]["commands"]):]
-
+		
 		if command == "viewcams":
-			embed = discord.Embed(colour=Color.blurple())
 
-			for country in COUNTRIES:
-				for place in country[1]:
-					if type(place[1]) is list:
-						embed.add_field(name=place[0], value=f"Use `{config['prefix']['cam']} {country[0].lower()} {place[0].lower()} 0-{len(place[1])-1}` to view this camera!")
-					else:
-						embed.add_field(name=place[0], value=f"Use `{config['prefix']['cam']} {country[0].lower()} {place[0].lower()}` to view this camera!")
-
-			await message.channel.send(embed=embed)
+			if len(args) == 0:
+				embed = discord.Embed(colour=Color.blurple())
+				
+				for country in COUNTRIES:
+					embed.add_field(name=country[0], value=f"Use {config['prefix']['commands']}viewcams {country[0]} to view cameras of this country.")
+			
+				await message.channel.send(embed=embed)
+			else:
+				country_arg = args[0]
+				found = False
+				
+				for country in COUNTRIES:
+					if country_arg.lower().startswith(country[0].lower()):
+						found = True
+						
+						embed = discord.Embed(colour=Color.blurple())
+						
+						for place in country[1]:
+							if type(place[1]) is list:
+								embed.add_field(name=place[0], value=f"Use `{config['prefix']['cam']} {country[0].lower()} {place[0].lower()} 0-{len(place[1])-1}` to view this camera!")
+							else:
+								embed.add_field(name=place[0], value=f"Use `{config['prefix']['cam']} {country[0].lower()} {place[0].lower()}` to view this camera!")
+						
+						await message.channel.send(embed=embed)
+					
+				if not found:
+					await message.channel.send("Did not find country called " + country_arg + "!")
 
 	if message.content.startswith(config["prefix"]["cam"] + " "):
 		args = message.content.split(" ") 
