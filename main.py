@@ -33,7 +33,23 @@ COUNTRIES = [
 				"https://rop.lv/hls/cam2.m3u8",
 				"https://rop.lv/hls/cam3.m3u8"
 			]],
-	]]
+	]],
+	["Russia", [
+		["Moscow", [
+			"https://cameras.inetcom.ru/hls/camera12_1.m3u8",
+			"https://cameras.inetcom.ru/hls/camera12_2.m3u8",
+			"https://cameras.inetcom.ru/hls/camera12_3.m3u8",
+			"https://cameras.inetcom.ru/hls/camera12_4.m3u8",
+			"https://cameras.inetcom.ru/hls/camera12_5.m3u8",
+			"https://cameras.inetcom.ru/hls/camera12_6.m3u8",
+			"https://cameras.inetcom.ru/hls/camera12_7.m3u8",
+			"https://cameras.inetcom.ru/hls/camera12_8.m3u8"
+		]],
+		["Petersburg", [
+			"https://www.youtube.com/watch?v=9ELF5lw-NX0",
+			"https://www.youtube.com/watch?v=JFT2sYtdcuc"
+		]]
+	]],
 ]
 
 activity = discord.Activity(type=discord.ActivityType.watching, name=f"webcams :) | {config['prefix']['commands']}viewcams")

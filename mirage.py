@@ -1,4 +1,4 @@
-import discord, requests, io, cv2, m3u8
+import discord, requests, io, cv2, m3u8, pafy
 from discord import message
 from discord.colour import Color
 
@@ -12,6 +12,21 @@ def getM3u8(url: str):
     buf = getFrame("/".join(url.split("/")[:-1]) + "/" + ts.uri)
     
     return buf
+
+def getYoutube(url: str):
+	video = pafy.new(url)
+	best = video.getbest(preftype="mp4")
+	
+	cap = cv2.VideoCapture(best.url)
+	
+	success, image = cap.read()
+
+	if success:
+		is_success, im_buf_arr = cv2.imencode(".jpg", image)
+
+		if is_success:
+			io_buf = io.BytesIO(im_buf_arr)
+			return io_buf
 
 def getFrame(url: str):
     cap = cv2.VideoCapture(url)
@@ -36,6 +51,14 @@ async def image(url: str, location: str, message: message):
 	elif ".m3u8" in url:
 		buf = getM3u8(url)
 		
+		if not buf:
+			await message.channel.send(embed=discord.Embed(title="Error!", description=f"Experienced networking error!", color=Color.red()))
+			return
+			
+		image = Image.open(buf)
+	elif "youtube.com" in url:
+		buf = getYoutube(url)
+
 		if not buf:
 			await message.channel.send(embed=discord.Embed(title="Error!", description=f"Experienced networking error!", color=Color.red()))
 			return
