@@ -47,7 +47,11 @@ COUNTRIES = [
 		]],
 		["Petersburg", [
 			"https://www.youtube.com/watch?v=9ELF5lw-NX0",
-			"https://www.youtube.com/watch?v=JFT2sYtdcuc"
+			"https://www.youtube.com/watch?v=JFT2sYtdcuc",
+			"https://www.youtube.com/watch?v=0jGp6QZFb50",
+			"https://www.youtube.com/watch?v=jbqT0fTj088",
+			"https://www.youtube.com/watch?v=7ni8Q_xdEO0",
+			"https://www.youtube.com/watch?v=7yihZkFqFrQ",
 		]]
 	]],
 ]
