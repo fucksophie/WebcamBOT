@@ -33,6 +33,18 @@ COUNTRIES = [
 				"https://rop.lv/hls/cam2.m3u8",
 				"https://rop.lv/hls/cam3.m3u8"
 			]],
+			["Birds", [
+				"https://www.youtube.com/watch?v=1JFzsE7NWoU",
+				"https://www.youtube.com/watch?v=Gpu5EARSXiI",
+				"https://www.youtube.com/watch?v=RW7dmXf-kmg",
+				"https://www.youtube.com/watch?v=S0oEvktgur4",
+				"https://www.youtube.com/watch?v=7oNM1al9pg4",
+				"https://www.youtube.com/watch?v=XNumeR-wWkQ",
+				"https://www.youtube.com/watch?v=xQu9kZeQtZ0",
+				"https://www.youtube.com/watch?v=4yOOSQ35Xqs",
+				"https://www.youtube.com/watch?v=9WfUw51PJzw",
+				"https://www.youtube.com/watch?v=-aSdIz1PUwQ",
+			]]
 	]],
 	["Russia", [
 		["Moscow", [
